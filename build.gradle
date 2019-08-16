@@ -1,4 +1,4 @@
-buildscript {1111111111111
+buildscript {
 	repositories {
 		maven { url "https://repo.spring.io/plugins-release" }
 	}

@@ -1,5 +1,4 @@
 package com.beyond.bean.moddle;
-
 public class Boot {
 	public Boot(String name,int id) {
 		this.name = name;
@@ -19,7 +18,6 @@ public int getId() {
 public void setId(int id) {
 	this.id = id;
 }
-@Override
 public String toString() {
 	return "Boot [name=" + name + ", id=" + id + "]";
 }

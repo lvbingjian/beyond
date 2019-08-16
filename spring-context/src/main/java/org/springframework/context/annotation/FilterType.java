@@ -39,6 +39,7 @@ public enum FilterType {
 
 	/**
 	 * Filter candidates assignable to a given type.
+	 * 给定的类
 	 * @see org.springframework.core.type.filter.AssignableTypeFilter
 	 */
 	ASSIGNABLE_TYPE,

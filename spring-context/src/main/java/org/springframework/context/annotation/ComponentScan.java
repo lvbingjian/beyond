@@ -28,8 +28,6 @@ import org.springframework.core.annotation.AliasFor;
 import org.springframework.core.type.filter.TypeFilter;
 
 /**
- * Configures component scanning directives for use with @{@link Configuration} classes.
- * Provides support parallel with Spring XML's {@code <context:component-scan>} element.
  *
  * <p>Either {@link #basePackageClasses} or {@link #basePackages} (or its alias
  * {@link #value}) may be specified to define specific packages to scan. If specific
@@ -45,7 +43,7 @@ import org.springframework.core.type.filter.TypeFilter;
  * {@code @ComponentScan} level would be ignored.
  *
  * <p>See {@link Configuration @Configuration}'s Javadoc for usage examples.
- *
+ *   配置组件扫描指令
  * @author Chris Beams
  * @author Juergen Hoeller
  * @author Sam Brannen
@@ -59,10 +57,7 @@ import org.springframework.core.type.filter.TypeFilter;
 public @interface ComponentScan {
 
 	/**
-	 * Alias for {@link #basePackages}.
-	 * <p>Allows for more concise annotation declarations if no other attributes
-	 * are needed &mdash; for example, {@code @ComponentScan("org.my.pkg")}
-	 * instead of {@code @ComponentScan(basePackages = "org.my.pkg")}.
+	 * 指定扫描的包
 	 */
 	@AliasFor("basePackages")
 	String[] value() default {};
@@ -126,19 +121,13 @@ public @interface ComponentScan {
 	boolean useDefaultFilters() default true;
 
 	/**
-	 * Specifies which types are eligible for component scanning.
-	 * <p>Further narrows the set of candidate components from everything in {@link #basePackages}
-	 * to everything in the base packages that matches the given filter or filters.
-	 * <p>Note that these filters will be applied in addition to the default filters, if specified.
-	 * Any type under the specified base packages which matches a given filter will be included,
-	 * even if it does not match the default filters (i.e. is not annotated with {@code @Component}).
-	 * @see #resourcePattern()
+	 * 包含的扫描范围
 	 * @see #useDefaultFilters()
 	 */
 	Filter[] includeFilters() default {};
 
 	/**
-	 * Specifies which types are not eligible for component scanning.
+	 * 指定哪些类型不适合组件扫描。
 	 * @see #resourcePattern
 	 */
 	Filter[] excludeFilters() default {};

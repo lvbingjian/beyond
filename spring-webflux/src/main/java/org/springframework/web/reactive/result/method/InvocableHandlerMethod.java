@@ -26,7 +26,7 @@ import java.util.stream.Stream;
 
 import reactor.core.publisher.Mono;
 
-import org.springframework.core.CoroutinesUtils;
+//import org.springframework.core.CoroutinesUtils;
 import org.springframework.core.DefaultParameterNameDiscoverer;
 import org.springframework.core.KotlinDetector;
 import org.springframework.core.MethodParameter;
@@ -135,12 +135,13 @@ public class InvocableHandlerMethod extends HandlerMethod {
 			ServerWebExchange exchange, BindingContext bindingContext, Object... providedArgs) {
 
 		return getMethodArgumentValues(exchange, bindingContext, providedArgs).flatMap(args -> {
-			Object value;
+			Object value = null;
 			try {
 				ReflectionUtils.makeAccessible(getBridgedMethod());
 				Method method = getBridgedMethod();
 				if (KotlinDetector.isKotlinReflectPresent() && KotlinDetector.isKotlinType(method.getDeclaringClass())) {
-					value = CoroutinesUtils.invokeHandlerMethod(method, getBean(), args);
+					System.out.println("ooo");
+//					value = CoroutinesUtils.invokeHandlerMethod(method, getBean(), args);
 				}
 				else {
 					value = method.invoke(getBean(), args);

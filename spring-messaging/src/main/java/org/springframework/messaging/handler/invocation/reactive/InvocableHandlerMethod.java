@@ -26,7 +26,7 @@ import java.util.stream.Stream;
 
 import reactor.core.publisher.Mono;
 
-import org.springframework.core.CoroutinesUtils;
+//import org.springframework.core.CoroutinesUtils;
 import org.springframework.core.DefaultParameterNameDiscoverer;
 import org.springframework.core.KotlinDetector;
 import org.springframework.core.MethodParameter;
@@ -126,12 +126,13 @@ public class InvocableHandlerMethod extends HandlerMethod {
 	@SuppressWarnings("KotlinInternalInJava")
 	public Mono<Object> invoke(Message<?> message, Object... providedArgs) {
 		return getMethodArgumentValues(message, providedArgs).flatMap(args -> {
-			Object value;
+			Object value = null;
 			try {
 				Method method = getBridgedMethod();
 				ReflectionUtils.makeAccessible(method);
 				if (KotlinDetector.isKotlinReflectPresent() && KotlinDetector.isKotlinType(method.getDeclaringClass())) {
-					value = CoroutinesUtils.invokeHandlerMethod(method, getBean(), args);
+					System.out.println("ooooo");
+//					value = CoroutinesUtils.invokeHandlerMethod(method, getBean(), args);
 				}
 				else {
 					value = method.invoke(getBean(), args);
