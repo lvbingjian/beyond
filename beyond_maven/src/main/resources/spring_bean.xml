@@ -5,7 +5,7 @@
         http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="boot" class="com.beyond.bean.moddle.Boot">
+    <bean id="boot" class="com.beyond.bean.moddle.Boot" init-method="" destroy-method="">
         <property name="name" value="lvbingjian"/>
          <property name="id" value="1"/>
     </bean>

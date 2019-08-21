@@ -848,13 +848,22 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 
 		// Iterate over a copy to allow for init methods which in turn register new bean definitions.
 		// While this may not be part of the regular factory bootstrap, it does otherwise work fine.
+//		迭代副本以允许init方法，而init方法反过来注册新的bean定义。虽然这可能不是常规工厂引导的一部分，但它在其他方面工作得很好。
+//		获取容器中所有bean定义的名称
 		List<String> beanNames = new ArrayList<>(this.beanDefinitionNames);
 
 		// Trigger initialization of all non-lazy singleton beans...
+//		触发所有非惰加载单例bean的初始化。
 		for (String beanName : beanNames) {
+			//合并我们的 bean定义
 			RootBeanDefinition bd = getMergedLocalBeanDefinition(beanName);
+			/**
+			 * 根据bean定义判断是不是抽象&&不是单例的&&不是懒加载的
+			 */
 			if (!bd.isAbstract() && bd.isSingleton() && !bd.isLazyInit()) {
+				//是不是工厂bean
 				if (isFactoryBean(beanName)) {
+//					给beanName前面加前缀&符号
 					Object bean = getBean(FACTORY_BEAN_PREFIX + beanName);
 					if (bean instanceof FactoryBean) {
 						final FactoryBean<?> factory = (FactoryBean<?>) bean;
@@ -869,11 +878,13 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 									((SmartFactoryBean<?>) factory).isEagerInit());
 						}
 						if (isEagerInit) {
+							//调用真正的getBean的流程
 							getBean(beanName);
 						}
 					}
 				}
 				else {
+					//非工厂bean就是普通的bean
 					getBean(beanName);
 				}
 			}
