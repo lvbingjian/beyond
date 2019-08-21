@@ -3,12 +3,19 @@ package com.beyond.bean.config;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
 
 import com.beyond.bean.moddle.Boot;
+import com.beyond.bean.moddle.Color;
+import com.beyond.bean.moddle.Red;
+import com.beyond.bean.service.ColorFactoryBean;
 
 @Configuration
+//导入组件，地默认是组件的全类名
+@Import({Color.class,Red.class})
+
 public class MyConfig {
 	//默认是单实例
 	/**
@@ -36,7 +43,8 @@ public class MyConfig {
 		return new Boot("xiangxiang", 2);
 	}
 /**
- * @Conditional 按照一定的条件判断，满足天剑给容器注册bean
+ * @Conditional 按照一定的条件判断，满足条件给容器注册bean
+ * 注入对象返回的是boolean true才会初始化到容器
  * 
  * 如果系统是windows 就给容器注册“香香”
  * 如果系统是linus 就给容器注册“湘湘”
@@ -48,5 +56,24 @@ public class MyConfig {
 	@Bean(value="bootConditiona2")
 	public Boot Boot2() {
 		return new Boot("湘湘", 18);
+	}
+	
+	
+	/**
+	 * 容器中逐渐注册的方式：
+	 * 1）包扫描+注解注入（@Controller/@Service/@Component/@Repository）[自己写的类]
+	 * 2) @Bean[导入的第三方包]
+	 * 3）@Import[快四的给容器中导入一个组件]
+	 * 		<1、@Impor（要导入的组件）容器会自动注册这个组件，id默认是组件的全类名
+	 * 		<2、ImportSelector：返回需要导入的全类名组件
+	 * 		<3、ImportBeanDefinitionRegistrar：
+	 * 4)使用Spring提供的FactoryBean(工厂bean)
+	 *  1>默认获取的是工程bean调用的getObject创建的对象（Spring5.1默认是单例的）
+	 *  2>要获取工程Bean本身我们需要给ID价前缀 &  （&&colorFactoryBean）
+	 */   
+	@Bean
+	public ColorFactoryBean colorFactoryBean() {
+		return new ColorFactoryBean();
+		
 	}
 }

@@ -57,6 +57,7 @@ public interface BeanPostProcessor {
 	 */
 	@Nullable
 	default Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+		System.out.println("postProcessBeforeInitialization-----"+beanName);
 		return bean;
 	}
 
@@ -83,6 +84,7 @@ public interface BeanPostProcessor {
 	 */
 	@Nullable
 	default Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+		System.out.println("postProcessAfterInitialization------"+beanName);
 		return bean;
 	}
 

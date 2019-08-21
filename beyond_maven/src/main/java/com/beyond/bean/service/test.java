@@ -10,19 +10,35 @@ import org.springframework.core.env.Environment;
 
 import com.beyond.bean.config.BootConfig;
 import com.beyond.bean.config.MyConfig;
-import com.beyond.bean.moddle.Boot;
 
 public class test {
+	static ApplicationContext test = new AnnotationConfigApplicationContext(MyConfig.class);
+	/**
+	 * 获取所有组件名称
+	 * @param test
+	 */
+	private static void printBeans( ApplicationContext test) {
+		String[] beanDefinitionNames = test.getBeanDefinitionNames();
+		for (String name: beanDefinitionNames) {
+			System.out.println(name);
+		}
+	}
+	
 	public static void main(String[] args) {
-		ApplicationContext test = new AnnotationConfigApplicationContext(MyConfig.class);
-		
-		
+//		@Import导入组件测试
+		printBeans(test);
+		Object bean = test.getBean("colorFactoryBean");
+		Object bean2 = test.getBean("colorFactoryBean");
+		Object bean3 = test.getBean("&colorFactoryBean");
+		System.out.println("bean类型"+bean.getClass());
+		System.out.println("bean3类型"+bean3.getClass());
+		System.out.println(bean==bean2);
 		
 //		@Conditional
 //		动态获取环境变量的值，Windows 10
-		Environment environment = test.getEnvironment();
-		String property = environment.getProperty("os.name");
-		System.out.println(property);
+//		Environment environment = test.getEnvironment();
+//		String property = environment.getProperty("os.name");
+//		System.out.println(property);
 //		String []names=test.getBeanDefinitionNames();
 //		for(String name :names){
 //			System.out.println(name);

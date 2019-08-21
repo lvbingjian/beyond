@@ -80,6 +80,12 @@ public @interface Scope {
 	 * @see org.springframework.web.context.WebApplicationContext#SCOPE_REQUEST
 	 * @see org.springframework.web.context.WebApplicationContext#SCOPE_SESSION
 	 * @see #value
+	 * singleton 单实例（默认）ioc容器启动会调用方法创建对象放到ioc容器
+	   			  以后每次使用直接从容器（map.get()）中拿
+	 * prototype 多实例 ioc容器启动并不会调用方法创建对象放在容器中，每次获取
+	   			  对象的时候才会调用发囊发创建对象个，
+	 * request 同一次请求创建一个实例
+	 * session 同一个session创建一个实例
 	 */
 	@AliasFor("value")
 	String scopeName() default "";
